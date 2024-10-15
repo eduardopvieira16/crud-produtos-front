@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class ProdutoListComponent implements OnInit {
   produtos: Produto[] = [];
+  produtosFiltrados: Produto[] = [];
   filtro: string = '';
 
   constructor(private produtoService: ProdutoService, private router: Router) {}
@@ -19,6 +20,7 @@ export class ProdutoListComponent implements OnInit {
   ngOnInit(): void {
     this.produtoService.getProdutos().subscribe((produtos) => {
       this.produtos = produtos;
+      this.produtosFiltrados = produtos;
     });
   }
 
@@ -29,10 +31,21 @@ export class ProdutoListComponent implements OnInit {
   excluirProduto(id: number): void {
     this.produtoService.excluirProduto(id).subscribe(() => {
       this.produtos = this.produtos.filter(produto => produto.id !== id);
+      this.filtrarProdutos();
     });
   }
 
   editarProduto(produto: Produto): void {
     this.router.navigate(['/produtos/', produto.id]);
+  }
+
+  filtrarProdutos(): void {
+    if (this.filtro) {
+      this.produtosFiltrados = this.produtos.filter(produto =>
+        produto.descricao.toLowerCase().includes(this.filtro.toLowerCase())
+      );
+    } else {
+      this.produtosFiltrados = this.produtos;
+    }
   }
 }

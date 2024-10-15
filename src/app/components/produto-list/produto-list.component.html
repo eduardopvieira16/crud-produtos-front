@@ -3,15 +3,19 @@
     <h1 class="text-center">Lista de Produtos</h1>
 
     <div class="action-container">
-      <button (click)="criarProduto()" class="btn btn-success btn-adicionar">Adicionar</button>
+      <button (click)="criarProduto()" class="btn btn-success btn-adicionar">
+        Adicionar
+      </button>
 
       <input
         type="text"
         placeholder="Filtro"
         class="form-control filtro-input"
+        [(ngModel)]="filtro"
       />
-
-      <button class="btn btn-primary btn-filtrar">Filtrar</button>
+      <button class="btn btn-primary btn-filtrar" (click)="filtrarProdutos()">
+        Filtrar
+      </button>
     </div>
 
     <table class="table table-striped">
@@ -24,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let produto of produtos">
+        <tr *ngFor="let produto of produtosFiltrados">
           <td>{{ produto.descricao }}</td>
           <td>{{ produto.preco | currency }}</td>
           <td>{{ produto.dataValidade | date }}</td>
@@ -34,6 +38,7 @@
           </td>
         </tr>
       </tbody>
+
     </table>
 
     <div *ngIf="produtos.length === 0" class="text-center">
