@@ -1,0 +1,43 @@
+<div class="app-container">
+  <div class="container">
+    <h1 class="text-center">Lista de Produtos</h1>
+
+    <div class="action-container">
+      <button (click)="criarProduto()" class="btn btn-success btn-adicionar">Adicionar</button>
+
+      <input
+        type="text"
+        placeholder="Filtro"
+        class="form-control filtro-input"
+      />
+
+      <button class="btn btn-primary btn-filtrar">Filtrar</button>
+    </div>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Descrição</th>
+          <th>Preço</th>
+          <th>Data de Validade</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let produto of produtos">
+          <td>{{ produto.descricao }}</td>
+          <td>{{ produto.preco | currency }}</td>
+          <td>{{ produto.dataValidade | date }}</td>
+          <td>
+            <button (click)="editarProduto(produto)" class="btn btn-warning">Editar</button>
+            <button (click)="excluirProduto(produto.id)" class="btn btn-danger">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="produtos.length === 0" class="text-center">
+      <p>Nenhum produto encontrado.</p>
+    </div>
+  </div>
+</div>
